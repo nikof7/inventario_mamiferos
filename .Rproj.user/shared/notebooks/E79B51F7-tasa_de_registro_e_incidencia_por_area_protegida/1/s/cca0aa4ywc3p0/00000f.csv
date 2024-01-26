@@ -1,0 +1,6 @@
+"0","data %>% "
+"0","  select(sitio, especie) %>% "
+"0","  group_by(sitio) %>% "
+"0","  distinct() %>%"
+"0","  group_by(especie) %>%"
+"0","  summarize(n = n())"
