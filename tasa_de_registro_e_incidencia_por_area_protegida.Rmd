@@ -1,5 +1,5 @@
 ---
-title: "Tasa de registros Incidencia por área protegida"
+title: "Tasa de registros e Incidencia"
 output:
   prettydoc::html_pretty:
     theme: cayman
