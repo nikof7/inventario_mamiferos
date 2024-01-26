@@ -1,5 +1,0 @@
-"0","write_xlsx(c(especies_por_ap, datos_por_ap, incidencia_tasa_por_especie), path = ""exportados/datos.csv"")
-"
-"2","Error in write_xlsx(c(especies_por_ap, datos_por_ap, incidencia_tasa_por_especie),  : 
-  Argument x must be a data frame or list of data frames
-"
