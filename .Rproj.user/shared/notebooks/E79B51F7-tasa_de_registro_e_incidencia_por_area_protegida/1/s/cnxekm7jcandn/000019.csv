@@ -1,4 +1,0 @@
-"0","tasa_registro_por_especie <- tasa_registro %>% "
-"0","  group_by(especie) %>% "
-"0","  summarise(promedio_tasa_registro = round(mean(tasa_registro), 4), sd_tasa_registro = round(sd(tasa_registro), 4))"
-"0","paged_table(tasa_registro_por_especie)"
