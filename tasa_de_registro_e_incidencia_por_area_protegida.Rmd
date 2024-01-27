@@ -1,5 +1,5 @@
 ---
-title: "Tasa de registros e Incidencia"
+title: "Tasa de registros e Incidencia "
 output:
   prettydoc::html_pretty:
     theme: cayman
@@ -23,6 +23,8 @@ library(writexl)
 load("data/planilla_general.RData")
 ```
 
+
+
 ## Datos de registros
 
 ```{r echo = FALSE}
@@ -43,6 +45,24 @@ data <- datos_sin_gatosNA %>%
 rm(datos, datos_sin_gatosNA, gatos)
 ```
 
+```{r echo=FALSE}
+# Unión de datos QC
+
+data_qc <- read.csv("data/datos_QC.csv") %>% 
+  mutate(sitio = str_sub(Punto,1,2)) %>% 
+  select(sitio, camara = "Punto", especie = "Especie")
+
+mamiferos <- c("Aaxi", "Btau", "Cfam", "Chir", "Ctho", "Cchi", "Ddam", "Dnov", "Dsep", "Dalb", "Ecab", "Esex", "Fcat", "Gcuj", "Hhyd", "Lgeo", "Lwie", "Leur", "Llon", "Lgym", "Mcoy", "Nnas", "Ofla", "Oari", "Obez", "Pcan", "Mgou", "Sscr", "Ttet")
+```
+
+```{r echo = FALSE}
+data <- data %>% 
+  full_join(data_qc) %>%
+  select(sitio, camara, especie) %>% 
+  filter(especie %in% mamiferos)
+rm(data_qc, mamiferos)
+```
+
 ## Esuferzo y cámaras instaladas
 
 ```{r}
@@ -53,7 +73,12 @@ info_camaras <- read.csv("data/info_dispositivos.csv") %>%
   select(sitio, id_dispositivo, esfuerzo) %>% 
   drop_na() %>% 
   group_by(sitio) %>% 
-  summarize(esfuerzo_total = sum(esfuerzo), n_camaras_totales = n_distinct(id_dispositivo))
+  summarize(esfuerzo_total = sum(esfuerzo), n_camaras_totales = n_distinct(id_dispositivo)) %>% 
+  add_row(data.frame(
+    sitio = "QC",
+    esfuerzo_total = 1144,
+    n_camaras_totales = 18)) %>% 
+  arrange(sitio)
 
 paged_table(info_camaras)
 ```
